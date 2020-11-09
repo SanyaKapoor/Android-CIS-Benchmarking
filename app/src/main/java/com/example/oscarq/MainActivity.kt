@@ -1,13 +1,17 @@
 package com.example.oscarq
+
 import android.app.KeyguardManager
 import android.content.Context
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.accessibility.AccessibilityManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 
 
 class MainActivity : AppCompatActivity() {
@@ -109,6 +113,46 @@ class MainActivity : AppCompatActivity() {
             else{
                 textView.text = textView.text as String + "\n " +"Disable install from unknown sources"
             }
+
+
+            //Ensure 'Find My Device' is set to 'Enabled' (Not Scored)
+            val locationManager =
+                getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                textView.text = textView.text as String + "\n " +"Find my device is enabled"
+            } else {
+                textView.text = textView.text as String + "\n " +"Find my device is not enabled"
+
+            }
+
+            //Ensure 'Lock screen' is set to 'Don't show notifications at all'
+            //(Not Scored)
+            val builder =
+                NotificationCompat.Builder(applicationContext)
+            try{
+            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                textView.text = textView.text as String + "\n " +"Unsafe public notification settings"
+            }
+            catch(e: Exception){
+                textView.text = textView.text as kotlin.String + "\n " +"Safe Public notification settings"
+            }
+
+
+
+            //Ensure 'Voice & Audio Activity' is set to 'Disabled' (Not Scored)
+            val am =
+                getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            val isAccessibilityEnabled = am.isEnabled
+            //val isExploreByTouchEnabled = am.isTouchExplorationEnabled
+            if(isAccessibilityEnabled){
+                textView.text = textView.text as String + "\n " +"Disable voice activity"
+            }
+            else{
+                textView.text = textView.text as kotlin.String + "\n " +"Voice activity disabled"
+
+            }
+
 
         }
 
