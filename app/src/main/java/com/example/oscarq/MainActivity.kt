@@ -8,17 +8,22 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.widget.ContentLoadingProgressBar
+import androidx.loader.content.Loader
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.GONE
         val handler = Handler()
         val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView0)
@@ -36,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         //TODO("need to update latest patch automatically")
 
         button.setOnClickListener {
-
+            findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.VISIBLE
             if(Build.VERSION.SECURITY_PATCH== "2020-09-01")
             {
                 handler.postDelayed(Runnable { textView.text =  Build.VERSION.SECURITY_PATCH +  " - BUILD UP TO DATE" }, 3000)
@@ -45,8 +50,9 @@ class MainActivity : AppCompatActivity() {
             {
                 handler.postDelayed(
                     Runnable {  textView.text =  Build.VERSION.SECURITY_PATCH + " - BUILD VERSION NOT UP TO DATE" },
-                    2000
+                    3000
                 )
+                findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.GONE
             }
 
             //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
@@ -64,11 +70,11 @@ class MainActivity : AppCompatActivity() {
                 else{
                     handler.postDelayed(
                         Runnable {  textView.text = textView.text as String +"\n" +"DEVICE LOCK IS DISENABLED" },
-                        3000
+                        3500
                     )
                 }
             }
-
+            findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.VISIBLE
             //Ensure 'Make pattern visible' is set to 'Disabled' (if using a
             //pattern as device lock mechanism)
             //TODO("How to check if pattern is not visible")
@@ -102,17 +108,17 @@ class MainActivity : AppCompatActivity() {
             val networkInfo=connectivityManager.activeNetworkInfo
             handler.postDelayed(
                 Runnable {   textView.text = textView.text as String + "\n " + networkInfo + "\n" + "NO UNTRUSTED NETWORK DETECTED" },
-                2000
+                5000
             )
 
-
+            findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.GONE
 
             //Ensure 'Developer Options' is set to 'Disabled' (Not Scored)
             if(Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
                 // debugging enabled
                 handler.postDelayed(
                     Runnable {   textView.text = textView.text as String + "\n" + "USB DEBUGGING MUST BE DISABLED"},
-                    3500
+                    4500
                 )
 
             } else {
@@ -135,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 handler.postDelayed(
                     Runnable {  textView.text = textView.text as String + "\n " +"Disable install from unknown sources" },
-                    2000
+                    4000
                 )
             }
 
@@ -166,13 +172,13 @@ class MainActivity : AppCompatActivity() {
             builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 handler.postDelayed(
                     Runnable { textView.text = textView.text as String + "\n " +"Unsafe public notification settings" },
-                    3000
+                    4000
                 )
             }
             catch(e: Exception){
                 handler.postDelayed(
                     Runnable { textView.text = textView.text as kotlin.String + "\n " +"Safe Public notification settings" },
-                    2500
+                    4000
                 )
             }
 
