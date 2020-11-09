@@ -39,16 +39,16 @@
 
     <TextView
         android:id="@+id/textView0"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-medium"
         android:text=" "
 
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/design_default_color_primary_variant"
         android:textAlignment="center"
         android:textSize="15dp"
         android:layout_marginTop="250dp"
-        android:layout_marginLeft="125dp"/>
+        android:layout_marginLeft="105dp"/>
 
 <!--        <Button-->
 <!--            android:id="@+id/button3"-->

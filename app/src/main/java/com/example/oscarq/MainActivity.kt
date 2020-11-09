@@ -1,14 +1,12 @@
 package com.example.oscarq
 import android.app.KeyguardManager
-import android.app.admin.DevicePolicyManager
-import android.content.ComponentName
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -16,17 +14,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       val button = findViewById<Button>(R.id.button)
-       // val button2 = findViewById<Button>(R.id.button2)
+        val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView0)
+       // val button2 = findViewById<Button>(R.id.button2)
        // val textView2 = findViewById<TextView>(R.id.textView2)
        // val textView3 = findViewById<TextView>(R.id.textView3)
        // val button3 = findViewById<Button>(R.id.button3)
-
-        val connectivityManager=this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo=connectivityManager.activeNetworkInfo
-        //val status = networkInfo!=null && networkInfo.isConnected
-        //println(networkInfo)
 
         //TODO("adapt profiling and helper functions")
         //TODO("Mongo")
@@ -38,13 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
 
-            if(android.os.Build.VERSION.SECURITY_PATCH== "2020-09-01")
+            if(Build.VERSION.SECURITY_PATCH== "2020-09-01")
             {
-                textView.text =  android.os.Build.VERSION.SECURITY_PATCH + "\n" + " - UP TO DATE"
+                textView.text =  Build.VERSION.SECURITY_PATCH +  " - BUILD UP TO DATE"
             }
             else
             {
-                textView.text =  android.os.Build.VERSION.SECURITY_PATCH + "\n" + " - NOT UP TO DATE"
+                textView.text =  Build.VERSION.SECURITY_PATCH + " - BUILD VERSION NOT UP TO DATE"
             }
 
             //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
@@ -64,32 +57,58 @@ class MainActivity : AppCompatActivity() {
             //pattern as device lock mechanism)
             //TODO("How to check if pattern is not visible")
 
-            val locktype: Int = Locktype.getCurrent(contentResolver)
-            when (locktype) {
-                Locktype.PATTERN -> {  textView.text = textView.text as String + "\n" + "COULD NOT DETECT IS PATTERN IS SET TO NOT VISIBLE"
-                }
+//            val locktype: Int = Locktype.getCurrent(contentResolver)
+//            when (locktype) {
+//                Locktype.PATTERN -> {  textView.text = textView.text as String + "\n" + "COULD NOT DETECT IS PATTERN IS SET TO NOT VISIBLE"
+//                }
+//            }
+//
+//            //Ensure 'Automatically Lock' is set to 'Immediately'
+//            lateinit var dpm: DevicePolicyManager
+//            lateinit var deviceAdminSample: ComponentName
+//            //val timeMs: Long = 1000L * timeout.text.toString().toLong()
+//            //dpm.setMaximumTimeToLock(deviceAdminSample, 1)
+//            if(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    dpm.autoTimeRequired
+//                } else {
+//                    TODO("VERSION.SDK_INT < LOLLIPOP")
+//                }
+//            ){
+//                textView.text = textView.text as String + "\n" + "KINDLY SET AUTOMOTIC TIME TO 1ms"
+//            }
+//            else{
+//                textView.text = textView.text as String + "\n" + "AUTOMATIC LOCK IS SET TO MINIMUM DURATION"
+//            }
+
+
+            //Do not connect to untrusted Wi-Fi networks (Not Scored)
+            val connectivityManager=this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo=connectivityManager.activeNetworkInfo
+            textView.text = textView.text as String + "\n " + networkInfo as String + "\n" + "NO UNTRUSTED NETWORK DETECTED"
+
+
+
+            //Ensure 'Developer Options' is set to 'Disabled' (Not Scored)
+            if(Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+                // debugging enabled
+                textView.text = textView.text as String + "\n" + "USB DEBUGGING MUST BE DISABLED"
+            } else {
+                textView.text = textView.text as String + "\n " +"DEBUGGING OPTIONS SAFELY CONFIGURED"
             }
 
-            //Ensure 'Automatically Lock' is set to 'Immediately'
-            lateinit var dpm: DevicePolicyManager
-            lateinit var deviceAdminSample: ComponentName
-            //val timeMs: Long = 1000L * timeout.text.toString().toLong()
-            //dpm.setMaximumTimeToLock(deviceAdminSample, 1)
-            if(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    dpm.autoTimeRequired
-                } else {
-                    TODO("VERSION.SDK_INT < LOLLIPOP")
-                }
-            ){
-                textView.text = textView.text as String + "\n" + "KINDLY SET AUTOMOTIC TIME TO 1ms"
+
+
+            //Ensure 'Install unknown apps' is set to 'Disabled' (Not Scored)
+            val isNonPlayAppAllowed = Settings.Secure.getInt(
+                contentResolver,
+                Settings.Secure.INSTALL_NON_MARKET_APPS
+            ) == 1
+            if (!isNonPlayAppAllowed) {
+                textView.text = textView.text as String + "\n " +"Install from unknown sources is disabled"
             }
             else{
-                textView.text = textView.text as String + "\n" + "AUTOMATIC LOCK IS SET TO MINIMUM DURATION"
+                textView.text = textView.text as String + "\n " +"Disable install from unknown sources"
             }
-
-            //Ensure 'Power button instantly locks' is set to 'Enabled'
-
-
 
         }
 
@@ -106,5 +125,7 @@ class MainActivity : AppCompatActivity() {
 //            Toast.makeText(this@MainActivity, "networkInfo verified", Toast.LENGTH_SHORT).show()
 //            textView3.text = "NO UNTRUSTED NETWORK DETECTED"
 //        }
+
+
     }
 }
