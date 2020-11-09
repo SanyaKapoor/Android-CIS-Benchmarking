@@ -6,6 +6,7 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.view.accessibility.AccessibilityManager
 import android.widget.Button
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val handler = Handler()
         val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView0)
        // val button2 = findViewById<Button>(R.id.button2)
@@ -37,11 +39,14 @@ class MainActivity : AppCompatActivity() {
 
             if(Build.VERSION.SECURITY_PATCH== "2020-09-01")
             {
-                textView.text =  Build.VERSION.SECURITY_PATCH +  " - BUILD UP TO DATE"
+                handler.postDelayed(Runnable { textView.text =  Build.VERSION.SECURITY_PATCH +  " - BUILD UP TO DATE" }, 3000)
             }
             else
             {
-                textView.text =  Build.VERSION.SECURITY_PATCH + " - BUILD VERSION NOT UP TO DATE"
+                handler.postDelayed(
+                    Runnable {  textView.text =  Build.VERSION.SECURITY_PATCH + " - BUILD VERSION NOT UP TO DATE" },
+                    2000
+                )
             }
 
             //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
@@ -50,10 +55,17 @@ class MainActivity : AppCompatActivity() {
             val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(km.isDeviceSecure){
-                    textView.text = textView.text as String + "\n" +"DEVICE LOCK IS ENABLED"
+                    handler.postDelayed(
+                        Runnable {
+                            textView.text = textView.text as String + "\n" +"DEVICE LOCK IS ENABLED"},
+                        4000
+                    )
                 }
                 else{
-                    textView.text = textView.text as String +"\n" +"DEVICE LOCK IS DISENABLED"
+                    handler.postDelayed(
+                        Runnable {  textView.text = textView.text as String +"\n" +"DEVICE LOCK IS DISENABLED" },
+                        3000
+                    )
                 }
             }
 
@@ -88,16 +100,23 @@ class MainActivity : AppCompatActivity() {
             //Do not connect to untrusted Wi-Fi networks (Not Scored)
             val connectivityManager=this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo=connectivityManager.activeNetworkInfo
-            textView.text = textView.text as String + "\n " + networkInfo as String + "\n" + "NO UNTRUSTED NETWORK DETECTED"
+            handler.postDelayed(
+                Runnable {   textView.text = textView.text as String + "\n " + networkInfo + "\n" + "NO UNTRUSTED NETWORK DETECTED" },
+                2000
+            )
 
 
 
             //Ensure 'Developer Options' is set to 'Disabled' (Not Scored)
             if(Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
                 // debugging enabled
-                textView.text = textView.text as String + "\n" + "USB DEBUGGING MUST BE DISABLED"
+                handler.postDelayed(
+                    Runnable {   textView.text = textView.text as String + "\n" + "USB DEBUGGING MUST BE DISABLED"},
+                    3500
+                )
+
             } else {
-                textView.text = textView.text as String + "\n " +"DEBUGGING OPTIONS SAFELY CONFIGURED"
+                handler.postDelayed(Runnable {  textView.text = textView.text as String + "\n " +"DEBUGGING OPTIONS SAFELY CONFIGURED" }, 2500)
             }
 
 
@@ -108,10 +127,16 @@ class MainActivity : AppCompatActivity() {
                 Settings.Secure.INSTALL_NON_MARKET_APPS
             ) == 1
             if (!isNonPlayAppAllowed) {
-                textView.text = textView.text as String + "\n " +"Install from unknown sources is disabled"
+                handler.postDelayed(
+                    Runnable {  textView.text = textView.text as String + "\n " +"Install from unknown sources is disabled" },
+                    3000
+                )
             }
             else{
-                textView.text = textView.text as String + "\n " +"Disable install from unknown sources"
+                handler.postDelayed(
+                    Runnable {  textView.text = textView.text as String + "\n " +"Disable install from unknown sources" },
+                    2000
+                )
             }
 
 
@@ -120,11 +145,18 @@ class MainActivity : AppCompatActivity() {
                 getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                textView.text = textView.text as String + "\n " +"Find my device is enabled"
+                handler.postDelayed(
+                    Runnable {  textView.text = textView.text as String + "\n " +"Find my device is enabled"},
+                    4500
+                )
             } else {
-                textView.text = textView.text as String + "\n " +"Find my device is not enabled"
 
+                handler.postDelayed(
+                    Runnable {  textView.text = textView.text as String + "\n " +"Find my device is not enabled"},
+                    3000
+                )
             }
+
 
             //Ensure 'Lock screen' is set to 'Don't show notifications at all'
             //(Not Scored)
@@ -132,12 +164,17 @@ class MainActivity : AppCompatActivity() {
                 NotificationCompat.Builder(applicationContext)
             try{
             builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                textView.text = textView.text as String + "\n " +"Unsafe public notification settings"
+                handler.postDelayed(
+                    Runnable { textView.text = textView.text as String + "\n " +"Unsafe public notification settings" },
+                    3000
+                )
             }
             catch(e: Exception){
-                textView.text = textView.text as kotlin.String + "\n " +"Safe Public notification settings"
+                handler.postDelayed(
+                    Runnable { textView.text = textView.text as kotlin.String + "\n " +"Safe Public notification settings" },
+                    2500
+                )
             }
-
 
 
             //Ensure 'Voice & Audio Activity' is set to 'Disabled' (Not Scored)
@@ -146,11 +183,17 @@ class MainActivity : AppCompatActivity() {
             val isAccessibilityEnabled = am.isEnabled
             //val isExploreByTouchEnabled = am.isTouchExplorationEnabled
             if(isAccessibilityEnabled){
-                textView.text = textView.text as String + "\n " +"Disable voice activity"
+                handler.postDelayed(
+                    Runnable { textView.text = textView.text as String + "\n " +"Disable voice activity" },
+                    3000
+                )
             }
             else{
-                textView.text = textView.text as kotlin.String + "\n " +"Voice activity disabled"
-
+                handler.postDelayed(
+                    Runnable {
+                        textView.text = textView.text as kotlin.String + "\n " +"Voice activity disabled" },
+                    4000
+                )
             }
 
 
