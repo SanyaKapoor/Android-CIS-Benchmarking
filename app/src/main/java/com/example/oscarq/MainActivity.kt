@@ -1,5 +1,7 @@
 package com.example.oscarq
 import android.app.KeyguardManager
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
@@ -14,12 +16,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       // val button = findViewById<Button>(R.id.button)
+       val button = findViewById<Button>(R.id.button)
        // val button2 = findViewById<Button>(R.id.button2)
         val textView = findViewById<TextView>(R.id.textView0)
-        val textView2 = findViewById<TextView>(R.id.textView2)
-        val textView3 = findViewById<TextView>(R.id.textView3)
-        val button3 = findViewById<Button>(R.id.button3)
+       // val textView2 = findViewById<TextView>(R.id.textView2)
+       // val textView3 = findViewById<TextView>(R.id.textView3)
+       // val button3 = findViewById<Button>(R.id.button3)
 
         val connectivityManager=this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo=connectivityManager.activeNetworkInfo
@@ -28,43 +30,67 @@ class MainActivity : AppCompatActivity() {
 
         //TODO("adapt profiling and helper functions")
         //TODO("Mongo")
+        //TODO("To add: L1/audit number corresponding to each audit")
+        //TODO("Remove buttons and prototype UI and figure a new UI")
 
         //Ensure Firmware is up to date (Android Security patch level)
         //TODO("need to update latest patch automatically")
 
-        if(android.os.Build.VERSION.SECURITY_PATCH== "2020-09-01")
-        {
-            textView.text =  android.os.Build.VERSION.SECURITY_PATCH + " - UP TO DATE"
-        }
-        else
-        {
-            textView.text =  android.os.Build.VERSION.SECURITY_PATCH + " - NOT UP TO DATE"
-        }
+        button.setOnClickListener {
 
-        //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
-        //TODO("VERSION.SDK_INT < M")
+            if(android.os.Build.VERSION.SECURITY_PATCH== "2020-09-01")
+            {
+                textView.text =  android.os.Build.VERSION.SECURITY_PATCH + "\n" + " - UP TO DATE"
+            }
+            else
+            {
+                textView.text =  android.os.Build.VERSION.SECURITY_PATCH + "\n" + " - NOT UP TO DATE"
+            }
 
-        val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
+            //TODO("VERSION.SDK_INT < M")
+
+            val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(km.isDeviceSecure){
-                    textView2.text = "DEVICE LOCK IS ENABLED"
+                    textView.text = textView.text as String + "\n" +"DEVICE LOCK IS ENABLED"
                 }
-            else{
-                    textView2.text = "DEVICE LOCK IS DISENABLED"
+                else{
+                    textView.text = textView.text as String +"\n" +"DEVICE LOCK IS DISENABLED"
                 }
             }
 
-        //Ensure 'Make pattern visible' is set to 'Disabled' (if using a
-        //pattern as device lock mechanism)
+            //Ensure 'Make pattern visible' is set to 'Disabled' (if using a
+            //pattern as device lock mechanism)
+            //TODO("How to check if pattern is not visible")
 
+            val locktype: Int = Locktype.getCurrent(contentResolver)
+            when (locktype) {
+                Locktype.PATTERN -> {  textView.text = textView.text as String + "\n" + "COULD NOT DETECT IS PATTERN IS SET TO NOT VISIBLE"
+                }
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(km.isDeviceSecure){
-                textView2.text = "DEVICE LOCK IS ENABLED"
+            //Ensure 'Automatically Lock' is set to 'Immediately'
+            lateinit var dpm: DevicePolicyManager
+            lateinit var deviceAdminSample: ComponentName
+            //val timeMs: Long = 1000L * timeout.text.toString().toLong()
+            //dpm.setMaximumTimeToLock(deviceAdminSample, 1)
+            if(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    dpm.autoTimeRequired
+                } else {
+                    TODO("VERSION.SDK_INT < LOLLIPOP")
+                }
+            ){
+                textView.text = textView.text as String + "\n" + "KINDLY SET AUTOMOTIC TIME TO 1ms"
             }
             else{
-                textView2.text = "DEVICE LOCK IS DISENABLED"
+                textView.text = textView.text as String + "\n" + "AUTOMATIC LOCK IS SET TO MINIMUM DURATION"
             }
+
+            //Ensure 'Power button instantly locks' is set to 'Enabled'
+
+
+
         }
 
 
@@ -76,9 +102,9 @@ class MainActivity : AppCompatActivity() {
 //          Toast.makeText(this@MainActivity, "Developer Options checked", Toast.LENGTH_SHORT).show()
 //        textView2.text = "WARNING: DISABLE USB DEBUGGING"
 //        }
-        button3.setOnClickListener {
-            Toast.makeText(this@MainActivity, "networkInfo verified", Toast.LENGTH_SHORT).show()
-            textView3.text = "NO UNTRUSTED NETWORK DETECTED"
-        }
+//        button3.setOnClickListener {
+//            Toast.makeText(this@MainActivity, "networkInfo verified", Toast.LENGTH_SHORT).show()
+//            textView3.text = "NO UNTRUSTED NETWORK DETECTED"
+//        }
     }
 }
