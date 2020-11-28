@@ -5,6 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
      android:layout_width="match_parent">
 
+
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="129dp"
@@ -34,23 +36,28 @@
             android:backgroundTint="@color/colorPrimary"
             android:text="Perform Compliance Checks"
             android:textColor="@color/cardview_light_background"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="185dp"
             android:layout_marginLeft="85dp"/>
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/textView0"
-        android:layout_width="300dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_gravity="left"
         android:textColor="@color/design_default_color_primary_variant"
         android:lineSpacingExtra="5dp"
-        android:lineSpacingMultiplier="1.5"
         android:textSize="15dp"
-        android:layout_marginTop="260dp"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginTop="240dp"
+        android:layout_marginLeft="10dp"/>
 
 
+    </ScrollView>
 
         <ProgressBar
             android:id="@+id/loadingPanel"
@@ -106,7 +113,6 @@
 <!--        android:textSize="15dp"-->
 <!--        android:layout_marginTop="450dp"-->
 <!--        android:layout_marginLeft="125dp"/>-->
-
 
 
 
