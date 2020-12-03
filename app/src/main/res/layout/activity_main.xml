@@ -92,15 +92,15 @@
 <!--        android:layout_marginTop="350dp"-->
 <!--        android:layout_marginLeft="125dp"/>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/button2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/colorPrimary"-->
-<!--            android:text="Developer Options"-->
-<!--            android:textColor="@color/cardview_light_background"-->
-<!--            android:layout_marginTop="400dp"-->
-<!--            android:layout_marginLeft="115dp" />-->
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="UI"
+            android:textColor="@color/cardview_light_background"
+            android:layout_marginTop="400dp"
+            android:layout_marginLeft="115dp" />
 
 <!--    <TextView-->
 <!--        android:id="@+id/textView2"-->

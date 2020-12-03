@@ -1,12 +1,14 @@
 package com.example.oscarq
 import android.app.KeyguardManager
 import android.content.Context
+import android.content.Intent
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.widget.Button
@@ -14,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView0)
-//        val button2 = findViewById<Button>(R.id.button2)
+        val button2 = findViewById<Button>(R.id.button2)
 //        val textView2 = findViewById<TextView>(R.id.textView2)
 //        val textView3 = findViewById<TextView>(R.id.textView3)
 //        val button3 = findViewById<Button>(R.id.button3)
@@ -195,6 +198,87 @@ class MainActivity : AppCompatActivity() {
 //            }
 
 
+            //(L2) Ensure 'Lock SIM card' is set to 'Enabled' (Not Scored)
+
+            /*
+            * @return true if SIM card exists
+            * false if SIM card is locked or doesn’t exists
+            * Note: This method requires permissions “android.permission.READ_PHONE_STATE”
+            */
+            var isAvailable = false;
+//            TelephonyManager telMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+//            val simState = telMgr.getSimState();
+//            when(simState){
+//                TelephonyManager.SIM_STATE_ABSENT ->//-> "SimState = “No Sim Found!”"
+//                TelephonyManager.SIM_STATE_NETWORK_LOCKED  //Toast("SimState = “Network Locked!”")
+//                TelephonyManager.SIM_STATE_PIN_REQUIRED -> //Toast("SimState = “PIN Required to access SIM!”")
+//                TelephonyManager.SIM_STATE_PUK_REQUIRED  //Toast("SimState = “Network Locked!”")
+//                TelephonyManager.SIM_STATE_READY -> isAvailable = true
+//                TelephonyManager.SIM_STATE_UNKNOWN -> //toast("SimState = “Unknown SIM State!”")
+//                else -> //toast("“Unknown SIM State!”")
+//            }
+
+            if(!isAvailable){
+                //LOCK IS ENABLED
+                handler.postDelayed(
+                    Runnable { textView.text = textView.text as String + "\nAUDIT FOR: Ensure 'Lock SIM card' is set to 'Enabled' (Not Scored)\n" +"Lock is Enabled" },
+                    3000
+                )
+            }
+            else{
+                //LOCK NOT ENABLED
+            }
+
+            //Ensure 'Use network-provided time' and 'Use network-
+            //provided time zone' are set to 'Enabled' (Not Scored)
+            val timeSettings = Settings.System.getString(
+                this.contentResolver,
+                Settings.System.AUTO_TIME
+            )
+            if (timeSettings.contentEquals("0")) {
+//                Settings.System.putString(
+//                    this.contentResolver,
+//                    Settings.System.AUTO_TIME, "1"
+
+                //Auto time not enabled
+//                )
+            }
+            else{
+                //Auto time is enabled
+            }
+            val now = Date(System.currentTimeMillis())
+            Log.d("Date", now.toString())
+
+            //Ensure 'Allow remote lock and erase' is set to 'Enabled'
+            //(Not Scored)
+
+
+
+            //Ensure 'Scan device for security threats' is set to
+            //'Enabled' (Not Scored)
+//            SafetyNet.getClient(this)
+//                .isVerifyAppsEnabled()
+//                .addOnCompleteListener(object : OnCompleteListener<VerifyAppsUserResponse?>() {
+//                    fun onComplete(task: Task<VerifyAppsUserResponse?>) {
+//                        if (task.isSuccessful()) {
+//                            val result: VerifyAppsUserResponse = task.getResult()
+//                            if (result.isVerifyAppsEnabled()) {
+//                                Log.d(
+//                                    "MY_APP_TAG",
+//                                    "The Verify Apps feature is enabled."
+//                                )
+//                            } else {
+//                                Log.d(
+//                                    "MY_APP_TAG",
+//                                    "The Verify Apps feature is disabled."
+//                                )
+//                            }
+//                        } else {
+//                            Log.e("MY_APP_TAG", "A general error occurred.")
+//                        }
+//                    }
+//                })
+
             //Ensure 'Voice & Audio Activity' is set to 'Disabled' (Not Scored)
             val am =
                 getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
@@ -218,10 +302,10 @@ class MainActivity : AppCompatActivity() {
 //            Toast.makeText(this@MainActivity, "Performed Firmware Check", Toast.LENGTH_SHORT).show()
 //            textView.text = Build.VERSION.RELEASE + " - UP TO DATE"
 //        }
-//        button2.setOnClickListener {
-//          Toast.makeText(this@MainActivity, "Developer Options checked", Toast.LENGTH_SHORT).show()
-//        textView2.text = "WARNING: DISABLE USB DEBUGGING"
-//        }
+        button2.setOnClickListener {
+            val intent = Intent(this, Main3Activity::class.java)
+            startActivity(intent)
+        }
 //        button3.setOnClickListener {
 //            Toast.makeText(this@MainActivity, "networkInfo verified", Toast.LENGTH_SHORT).show()
 //            textView3.text = "NO UNTRUSTED NETWORK DETECTED"
@@ -261,7 +345,7 @@ Scored)
 (L1) Ensure 'Install unknown apps' is set to 'Disabled' (Not
 Scored)
 (L1) Do not root your device (Not Scored)
-(L2) Ensure 'Smart Lock' is set to 'Disabled' (Not Scored)
+(L2) Ensure 'Smart Lock' is set to 'Disabled' (Not Scored) ------------
 (L2) Ensure 'Lock SIM card' is set to 'Enabled' (Not Scored)
 (L2) Ensure 'Find My Device' is set to 'Enabled' (Not Scored)
 (L1) Ensure 'Use network-provided time' and 'Use network-
@@ -315,7 +399,6 @@ Android OS Chrome Browser Settings
 (L1) Ensure 'Allow third-party cookies' is set to 'Disabled'
 (Not Scored)
 (L1) Ensure 'Safe Browsing' is set to 'Enabled' (Not Scored)
-
 (L2) Ensure 'Search and URL suggestions' is set to 'Disabled'
 (Not Scored)
 (L2) Ensure 'Do Not Track' is set to 'Enabled' (Not Scored)
