@@ -14,7 +14,19 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
+import android.graphics.Color
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main2.*
+import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
+
 class Main3Activity : AppCompatActivity() {
+
+    lateinit var tvR: TextView
+    lateinit var tvPython:TextView
+    lateinit var tvCPP:TextView
+    lateinit var tvJava:TextView
+    lateinit var pieChart: PieChart
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -41,6 +53,20 @@ class Main3Activity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        // Link those objects with their
+        // respective id's that
+        // we have given in .XML file
+        tvR = findViewById(R.id.tvR);
+        tvPython = findViewById(R.id.tvPython);
+        tvCPP = findViewById(R.id.tvCPP);
+        tvJava = findViewById(R.id.tvJava);
+        pieChart = findViewById(R.id.piechart);
+
+        // Creating a method setData()
+        // to set the text in text view and pie chart
+        setData();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,4 +79,45 @@ class Main3Activity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    private fun setData() {
+
+        // Set the percentage of language used
+        tvR.text = Integer.toString(40)
+        tvPython.text = Integer.toString(30)
+        tvCPP.text = Integer.toString(5)
+        tvJava.text = Integer.toString(25)
+
+        // Set the data and color to the pie chart
+        pieChart.addPieSlice(
+            PieModel(
+                "R", tvR.text.toString().toInt().toFloat(),
+                Color.parseColor("#6200EE")
+            )
+        )
+        pieChart.addPieSlice(
+            PieModel(
+                "Python", tvPython.text.toString().toInt().toFloat(),
+                Color.parseColor("#3700B3")
+            )
+        )
+        pieChart.addPieSlice(
+            PieModel(
+                "C++", tvCPP.text.toString().toInt().toFloat(),
+                Color.parseColor("#29B6F6")
+            )
+        )
+        pieChart.addPieSlice(
+            PieModel(
+                "Java", tvJava.text.toString().toInt().toFloat(),
+                Color.parseColor("#03DAC5")
+            )
+        )
+
+        // To animate the pie chart
+        pieChart.startAnimation()
+    }
+
+
+
 }
