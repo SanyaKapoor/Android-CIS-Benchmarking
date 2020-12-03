@@ -14,7 +14,7 @@ class Main2Activity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Welcome to OSCARQ! We are all about meaningful metrics. Visit our website for more.", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Action", null).show()
         }
     }
