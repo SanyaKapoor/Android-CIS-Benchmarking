@@ -1,5 +1,7 @@
 package com.example.oscarq
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,7 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
 import android.graphics.Color
+import android.text.Layout
+import android.view.View
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main2.*
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
@@ -30,11 +36,25 @@ class Main3Activity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main3)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        // Link those objects with their
+        // respective id's that
+        // we have given in .XML file
+        tvR = findViewById(R.id.tvR)
+        tvPython = findViewById(R.id.tvPython)
+        tvCPP = findViewById(R.id.tvCPP)
+        tvJava = findViewById(R.id.tvJava)
+        pieChart = findViewById(R.id.piechart)
+
+        // Creating a method setData()
+        // to set the text in text view and pie chart
+        setData()
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
@@ -51,26 +71,15 @@ class Main3Activity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
             ), drawerLayout
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
-        // Link those objects with their
-        // respective id's that
-        // we have given in .XML file
-        tvR = findViewById(R.id.tvR);
-        tvPython = findViewById(R.id.tvPython);
-        tvCPP = findViewById(R.id.tvCPP);
-        tvJava = findViewById(R.id.tvJava);
-        pieChart = findViewById(R.id.piechart);
-
-        // Creating a method setData()
-        // to set the text in text view and pie chart
-        setData();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
+//        val a: CoordinatorLayout = findViewById(R.id.hideme)
+//        a.visibility = View.GONE
         menuInflater.inflate(R.menu.main3, menu)
         return true
     }
@@ -79,6 +88,20 @@ class Main3Activity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+//    @SuppressLint("ResourceType")
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 0) {
+//            val a: DrawerLayout = findViewById(R.layout.activity_main3)
+//            a.visibility = View.VISIBLE
+//            supportFragmentManager.popBackStack(
+//                null,
+//                FragmentManager.POP_BACK_STACK_INCLUSIVE
+//            )
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 
     private fun setData() {
 

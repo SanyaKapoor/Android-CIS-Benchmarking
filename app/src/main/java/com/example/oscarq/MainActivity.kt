@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<ProgressBar>(R.id.loadingPanel).visibility = View.GONE
         val handler = Handler()
         val button = findViewById<Button>(R.id.button)
+        button.visibility = View.GONE
         val textView = findViewById<TextView>(R.id.textView0)
         val button2 = findViewById<Button>(R.id.button2)
 //        val textView2 = findViewById<TextView>(R.id.textView2)

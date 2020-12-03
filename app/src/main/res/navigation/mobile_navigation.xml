@@ -28,11 +28,11 @@
             app:argType="string" />
     </fragment>
 
-    <fragment
+        <activity
         android:id="@+id/nav_gallery"
-        android:name="com.example.oscarq.ui.gallery.GalleryFragment"
+        android:name="com.example.oscarq.security"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/security" />
 
     <fragment
         android:id="@+id/nav_slideshow"
