@@ -16,8 +16,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.mongodb.MongoClient
+import com.mongodb.MongoClientURI
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
@@ -37,7 +38,9 @@ class MainActivity : AppCompatActivity() {
         val button2 = findViewById<Button>(R.id.button2)
 //        val textView2 = findViewById<TextView>(R.id.textView2)
 //        val textView3 = findViewById<TextView>(R.id.textView3)
-//        val button3 = findViewById<Button>(R.id.button3)
+        val button200 = findViewById<Button>(R.id.button200)
+
+        val button420 = findViewById<Button>(R.id.button420)
 
         //TODO("adapt profiling and helper functions")
         //TODO("Mongo")
@@ -313,15 +316,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Main3Activity::class.java)
             startActivity(intent)
         }
-//        button3.setOnClickListener {
-//            Toast.makeText(this@MainActivity, "networkInfo verified", Toast.LENGTH_SHORT).show()
-//            textView3.text = "NO UNTRUSTED NETWORK DETECTED"
-//        }
+        button200.setOnClickListener {
+            val intent = Intent(this, security::class.java)
+            startActivity(intent)
+        }
+        button420.setOnClickListener {
+            val intent = Intent(this, Privacy::class.java)
+            startActivity(intent)
+        }
     }
 
 }
-
-
 
 
 /*

@@ -22,14 +22,14 @@ import androidx.core.app.NotificationCompat
 import java.util.*
 
 
-class security : AppCompatActivity() {
+class Privacy : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.security)
+        setContentView(R.layout.privacy)
         val handler = Handler()
-        val imgbutton: ImageButton = findViewById<ImageButton>(R.id.securityyy)
-        val textView = findViewById<TextView>(R.id.textViewsecurity)
+        val imgbutton: ImageButton = findViewById<ImageButton>(R.id.privacyyy)
+        val textView = findViewById<TextView>(R.id.textViewprivacy)
 
         imgbutton.setOnClickListener {
 
