@@ -31,6 +31,10 @@
             android:name=".security"
             android:label="Security"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Privacy"
+            android:label="Privacy"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

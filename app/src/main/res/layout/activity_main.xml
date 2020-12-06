@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            android:textSize="15dp"
+            android:textSize="13.5dp"
             android:backgroundTint="@color/R"
             android:text="Scores →"
             android:textColor="@color/cardview_light_background"
@@ -127,7 +127,7 @@
         <Button
             android:id="@+id/button200"
             android:layout_width="wrap_content"
-            android:textSize="15dp"
+            android:textSize="13.5dp"
             android:elevation="0dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/CPP"
@@ -140,8 +140,8 @@
     <Button
         android:id="@+id/button420"
         android:layout_width="wrap_content"
-        android:textSize="15dp"
-        android:elevation="0dp"
+        android:textSize="13.5dp"
+        android:shadowRadius=""
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Java"
         android:text="Privacy →"

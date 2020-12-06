@@ -1,6 +1,6 @@
 package com.example.oscarq
 
-import android.R.id
+import android.R.*
 import android.app.KeyguardManager
 import android.content.Context
 import android.graphics.Color

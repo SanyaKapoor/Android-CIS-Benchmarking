@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import java.util.*
 
-
 class security : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?){
@@ -32,6 +31,9 @@ class security : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textViewsecurity)
 
         imgbutton.setOnClickListener {
+
+//            Android OS Security Settings
+//            (L1) Ensure device firmware is up to date (Not Scored)
 
             if(Build.VERSION.SECURITY_PATCH== "2020-09-01")
             {
@@ -44,6 +46,54 @@ class security : AppCompatActivity() {
                     3000
                 )
             }
+
+//            (L1) Ensure 'Screen Lock' is set to 'Enabled' (Not Scored)
+//            (L1) Ensure 'Make pattern visible' is set to 'Disabled' (if using
+//            a pattern as device lock mechanism) (Not Scored)
+//            (L1) Ensure 'Automatically Lock' is set to 'Immediately' (Not
+//            Scored)
+//            (L1) Ensure 'Power button instantly locks' is set to 'Enabled'
+//            (Not Scored)
+//            (L1) Ensure 'Lock Screen Message' is configured (Not Scored) --------------
+//            (L2) Do not connect to untrusted Wi-Fi networks (Not
+//                    Scored)
+//            (L2) Ensure 'Show passwords' is set to 'Disabled' (Not
+//            Scored) ------------
+//            (L1) Ensure 'Developer Options' is set to 'Disabled' (Not
+//            Scored)
+//            (L1) Ensure 'Install unknown apps' is set to 'Disabled' (Not
+//            Scored)
+//            (L1) Do not root your device (Not Scored)
+//            (L2) Ensure 'Smart Lock' is set to 'Disabled' (Not Scored) ------------
+//            (L2) Ensure 'Lock SIM card' is set to 'Enabled' (Not Scored)
+//            (L2) Ensure 'Find My Device' is set to 'Enabled' (Not Scored)
+//            (L1) Ensure 'Use network-provided time' and 'Use network-
+//            provided time zone' are set to 'Enabled' (Not Scored)
+//            (L1) Ensure 'Remotely locate this device' is set to 'Enabled'
+//            (Not Scored)
+//            (L1) Ensure 'Allow remote lock and erase' is set to 'Enabled'
+//            (Not Scored)
+//            (L1) Ensure 'Scan device for security threats' is set to
+//            'Enabled' (Not Scored)
+//            (L1) Ensure 'Improve harmful app detection' is set to
+//            'Enabled' (Not Scored)
+//            (L1) Ensure 'Ask for unlock pattern/PIN/password before
+//            unpinning' is set to 'Enabled' (Not Scored)
+//            (L1) Ensure 'Screen timeout' is set to '1 minute or less' (Not
+//            Scored)
+//            (L1) Ensure 'Wi-Fi assistant' is set to 'Disabled' (Not Scored)
+//            (L1) Keep device Apps up to date (Not Scored)
+//            (L1) Ensure 'Add users from lock screen' is set to 'Disabled'
+//            (Not Scored)
+//            (L1) Ensure 'Guest profiles' do not exist (Not Scored)
+//            (L1) Review app permissions periodically (Not Scored)
+//            (L1) Ensure 'Instant apps' is set to 'Disabled' (Not Scored)
+
+
+
+
+
+
 
             //Ensure 'Screen Lock' is set to 'Enabled'(Pin/Password/Pattern)
             //TODO("VERSION.SDK_INT < M")
