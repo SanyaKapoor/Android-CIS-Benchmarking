@@ -1,0 +1,3 @@
+[submodule "Detection-of-Deepfakes"]
+	path = Detection-of-Deepfakes
+	url = https://github.com/SanyaKapoor/Detection-of-Deepfakes.git
